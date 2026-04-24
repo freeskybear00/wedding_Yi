@@ -96,7 +96,8 @@
         /* 首頁背景區 */
         .hero {
             height: 100vh;
-            background: url('image.jpg') center/cover no-repeat; 
+            /* 配合您的 GitHub 檔名：image.jpg */
+            background: #e9edc9 url('image.jpg') center/cover no-repeat; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -152,6 +153,7 @@
             <span id="music-icon">🎵</span>
         </div>
         <audio id="bg-music" loop>
+            <!-- 配合您的 GitHub 檔名：perfect_cut.mp3 -->
             <source src="perfect_cut.mp3" type="audio/mpeg">
         </audio>
 
@@ -269,7 +271,9 @@
             music.play().then(() => {
                 musicBtn.classList.add('rotating');
                 isPlaying = true;
-            }).catch(e => console.log("播放被瀏覽器暫時擋下，點擊按鈕重試"));
+            }).catch(e => {
+                console.log("播放被瀏覽器暫時擋下，點擊按鈕重試");
+            });
 
             // 遮罩消失
             overlay.style.opacity = '0';
@@ -283,8 +287,13 @@
         // 音樂手動開關
         musicBtn.onclick = (e) => {
             e.stopPropagation();
-            if (isPlaying) { music.pause(); musicBtn.classList.remove('rotating'); }
-            else { music.play(); musicBtn.classList.add('rotating'); }
+            if (isPlaying) { 
+                music.pause(); 
+                musicBtn.classList.remove('rotating'); 
+            } else { 
+                music.play(); 
+                musicBtn.classList.add('rotating'); 
+            }
             isPlaying = !isPlaying;
         };
 
@@ -299,8 +308,8 @@
             document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
         }, 1000);
 
-        // 表單傳送
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbym3ZPWi3nsJ8KajCLxemN7kM3SwGBBqBLtvN2dbHqvUl4zNZZqBJnsQNTFt8NlWlte/exec'; // <--- 請填入你的 GAS 網址
+        // 表單傳送 (已填入您的 GAS 網址)
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbym3ZPWi3nsJ8KajCLxemN7kM3SwGBBqBLtvN2dbHqvUl4zNZZqBJnsQNTFt8NlWlte/exec'; 
         const form = document.getElementById('rsvp-form');
         const btn = document.getElementById('submit-btn');
 
@@ -311,8 +320,17 @@
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
             fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) })
-            .then(() => { alert('🎉 回函成功！我們婚禮見！'); form.reset(); btn.disabled = false; btn.innerText = '💖 送出回函 💖'; })
-            .catch(() => { alert('發生錯誤'); btn.disabled = false; });
+            .then(() => { 
+                alert('🎉 回函成功！我們婚禮見！'); 
+                form.reset(); 
+                btn.disabled = false; 
+                btn.innerText = '💖 送出回函 💖'; 
+            })
+            .catch(() => { 
+                alert('提交失敗，請檢查網路後再試'); 
+                btn.disabled = false; 
+                btn.innerText = '💖 送出回函 💖';
+            });
         };
     </script>
 </body>

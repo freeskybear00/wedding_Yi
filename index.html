@@ -22,53 +22,59 @@
             font-family: 'Noto Sans TC', sans-serif;
             color: var(--text-color);
             background-color: var(--bg-color);
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff9eaa' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             overflow-x: hidden;
         }
 
-        /* 開場遮罩 */
+        /* 開場遮罩 - 這裡也加入背景圖，讓使用者一進來就看到照片 */
         #entry-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--bg-color);
+            background: linear-gradient(rgba(255, 249, 240, 0.8), rgba(255, 249, 240, 0.8)), 
+                        url('image.jpg') center/cover no-repeat;
             z-index: 3000;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 1s ease-out;
+            transition: all 1s ease-out;
         }
 
         .heart-loader {
-            font-size: 50px;
+            font-size: 60px;
             color: var(--primary-color);
             animation: beat 1s infinite alternate;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255,158,170,0.5);
         }
 
         @keyframes beat {
             from { transform: scale(1); }
-            to { transform: scale(1.3); }
+            to { transform: scale(1.2); }
         }
 
         .open-btn {
-            padding: 15px 40px;
+            padding: 18px 50px;
             background-color: var(--primary-color);
             color: white;
-            border: 3px solid white;
+            border: 4px solid white;
             border-radius: 50px;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 158, 170, 0.5);
+            box-shadow: 0 5px 20px rgba(255, 158, 170, 0.6);
+            transition: transform 0.2s;
+            z-index: 3001;
         }
 
-        /* 內容隱藏直到點擊 */
+        .open-btn:active { transform: scale(0.95); }
+
+        /* 內容區塊 */
         #main-content {
-            display: none;
+            opacity: 0; /* 預設透明，點擊後才出現 */
+            transition: opacity 1s ease;
         }
 
         /* 音樂按鈕 */
@@ -77,17 +83,17 @@
             top: 20px;
             right: 20px;
             z-index: 1000;
-            width: 50px;
-            height: 50px;
-            background: #fff;
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.9);
             border: 3px solid var(--primary-color);
             border-radius: 50%;
-            display: flex;
+            display: none; /* 初始隱藏，進入後才顯示 */
             align-items: center;
             justify-content: center;
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            font-size: 24px;
+            font-size: 20px;
         }
 
         .rotating { animation: rotate 5s linear infinite; }
@@ -96,7 +102,7 @@
         /* 首頁背景區 */
         .hero {
             height: 100vh;
-            /* 配合您的 GitHub 檔名：image.jpg */
+            /* 這裡是主照片 */
             background: #e9edc9 url('image.jpg') center/cover no-repeat; 
             display: flex;
             flex-direction: column;
@@ -112,7 +118,7 @@
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.7) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.7) 100%);
         }
 
         .hero-content { position: relative; z-index: 1; text-shadow: 2px 2px 5px rgba(0,0,0,0.6); }
@@ -123,12 +129,10 @@
         .container { background: #fff; max-width: 550px; margin: 0 auto; padding: 40px 25px; border-radius: var(--border-radius); box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 4px dashed #FFD166; position: relative; }
         .section-title { font-size: 2rem; color: var(--text-color); margin-bottom: 30px; display: inline-block; font-weight: bold; border-bottom: 6px solid var(--secondary-color); }
         
-        /* 倒數計時 */
         .countdown-container { display: flex; justify-content: center; gap: 12px; margin-top: 25px; }
         .countdown-item { background: #fff; padding: 15px 5px; border-radius: 20px; min-width: 70px; border: 3px solid var(--accent-color); }
         .countdown-item span { font-size: 1.8rem; font-weight: bold; color: var(--accent-color); }
 
-        /* RSVP Form */
         form { text-align: left; }
         .form-group { margin-bottom: 20px; }
         label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 1.1rem; }
@@ -143,7 +147,7 @@
     <!-- 開場遮罩 -->
     <div id="entry-overlay">
         <div class="heart-loader">❤️</div>
-        <p style="font-size: 1.2rem; color: var(--text-color); margin-bottom: 30px;">勝捷 & 佳嬑 婚禮邀請函</p>
+        <p style="font-size: 1.3rem; color: var(--text-color); margin-bottom: 30px; font-weight: bold;">勝捷 & 佳嬑<br>婚禮邀請函</p>
         <button class="open-btn" onclick="startEverything()">開啟幸福</button>
     </div>
 
@@ -153,7 +157,6 @@
             <span id="music-icon">🎵</span>
         </div>
         <audio id="bg-music" loop>
-            <!-- 配合您的 GitHub 檔名：perfect_cut.mp3 -->
             <source src="perfect_cut.mp3" type="audio/mpeg">
         </audio>
 
@@ -262,29 +265,29 @@
         const mainContent = document.getElementById('main-content');
         let isPlaying = false;
 
-        // 當點擊開場按鈕時，啟動音樂、關閉遮罩
         function startEverything() {
-            // 顯示內容
-            mainContent.style.display = 'block';
+            // 顯示主內容
+            mainContent.style.opacity = '1';
             
             // 啟動音樂
             music.play().then(() => {
                 musicBtn.classList.add('rotating');
                 isPlaying = true;
             }).catch(e => {
-                console.log("播放被瀏覽器暫時擋下，點擊按鈕重試");
+                console.log("Autoplay prevented, will play on next interaction");
             });
 
-            // 遮罩消失
+            // 顯示音樂按鈕
+            musicBtn.style.display = 'flex';
+
+            // 遮罩淡出
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                // 觸發一次 AOS 確保動畫正確執行
                 AOS.refresh();
             }, 1000);
         }
 
-        // 音樂手動開關
         musicBtn.onclick = (e) => {
             e.stopPropagation();
             if (isPlaying) { 
@@ -297,7 +300,6 @@
             isPlaying = !isPlaying;
         };
 
-        // 倒數計時
         const weddingDate = new Date("May 16, 2026 12:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
@@ -308,7 +310,6 @@
             document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
         }, 1000);
 
-        // 表單傳送 (已填入您的 GAS 網址)
         const scriptURL = 'https://script.google.com/macros/s/AKfycbym3ZPWi3nsJ8KajCLxemN7kM3SwGBBqBLtvN2dbHqvUl4zNZZqBJnsQNTFt8NlWlte/exec'; 
         const form = document.getElementById('rsvp-form');
         const btn = document.getElementById('submit-btn');

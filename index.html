@@ -4,17 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>勝捷 & 佳嬑 婚禮邀請函</title>
-    <!-- 引入可愛的字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Just+Another+Hand&display=swap" rel="stylesheet">
-    <!-- 引入動畫庫 -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #FF9EAA; /* 溫暖粉 */
-            --secondary-color: #FFD166; /* 溫暖黃 */
-            --accent-color: #06D6A0; /* 清新綠 */
-            --text-color: #5D4037; /* 深咖啡色文字 */
-            --bg-color: #FFF9F0; /* 米黃色背景 */
+            --primary-color: #FF9EAA;
+            --secondary-color: #FFD166;
+            --accent-color: #06D6A0;
+            --text-color: #5D4037;
+            --bg-color: #FFF9F0;
             --border-radius: 25px;
         }
 
@@ -24,12 +22,56 @@
             font-family: 'Noto Sans TC', sans-serif;
             color: var(--text-color);
             background-color: var(--bg-color);
-            /* 背景可愛小圖示裝飾 */
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff9eaa' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             overflow-x: hidden;
         }
 
-        /* 音樂按鈕 - 卡通旋轉風 */
+        /* 開場遮罩 */
+        #entry-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease-out;
+        }
+
+        .heart-loader {
+            font-size: 50px;
+            color: var(--primary-color);
+            animation: beat 1s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes beat {
+            from { transform: scale(1); }
+            to { transform: scale(1.3); }
+        }
+
+        .open-btn {
+            padding: 15px 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border: 3px solid white;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 158, 170, 0.5);
+        }
+
+        /* 內容隱藏直到點擊 */
+        #main-content {
+            display: none;
+        }
+
+        /* 音樂按鈕 */
         #music-btn {
             position: fixed;
             top: 20px;
@@ -48,20 +90,13 @@
             font-size: 24px;
         }
 
-        .rotating {
-            animation: rotate 5s linear infinite;
-        }
+        .rotating { animation: rotate 5s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* 首頁大圖區 */
+        /* 首頁背景區 */
         .hero {
             height: 100vh;
-            /* 【注意】如果你把照片跟 html 放在一起，請改為 url('你的檔名.jpg') */
-            background: url('image.png') center/cover no-repeat; 
+            background: url('image.jpg') center/cover no-repeat; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -75,249 +110,145 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.7) 100%);
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
-        }
+        .hero-content { position: relative; z-index: 1; text-shadow: 2px 2px 5px rgba(0,0,0,0.6); }
+        .hero h1 { font-family: 'Just Another Hand', cursive; font-size: 4.5rem; margin: 0; color: var(--secondary-color); }
+        .hero p.date { font-size: 1.5rem; font-weight: bold; background: var(--primary-color); padding: 8px 20px; border-radius: 50px; display: inline-block; margin-top: 10px; }
 
-        .hero h1 {
-            font-family: 'Just Another Hand', cursive;
-            font-size: 4.5rem;
-            margin: 0;
-            color: var(--secondary-color);
-        }
-
-        .hero p.date {
-            font-size: 1.5rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            background: var(--primary-color);
-            padding: 8px 20px;
-            border-radius: 50px;
-            display: inline-block;
-            margin-top: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        /* 內容區塊 */
-        section {
-            padding: 50px 20px;
-            text-align: center;
-        }
-
-        .container {
-            background: #fff;
-            max-width: 550px;
-            margin: 0 auto;
-            padding: 40px 25px;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border: 4px dashed #FFD166;
-            position: relative;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            color: var(--text-color);
-            margin-bottom: 30px;
-            display: inline-block;
-            font-weight: bold;
-            border-bottom: 6px solid var(--secondary-color);
-        }
-
+        section { padding: 50px 20px; text-align: center; }
+        .container { background: #fff; max-width: 550px; margin: 0 auto; padding: 40px 25px; border-radius: var(--border-radius); box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 4px dashed #FFD166; position: relative; }
+        .section-title { font-size: 2rem; color: var(--text-color); margin-bottom: 30px; display: inline-block; font-weight: bold; border-bottom: 6px solid var(--secondary-color); }
+        
         /* 倒數計時 */
-        .countdown-container {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 25px;
-        }
+        .countdown-container { display: flex; justify-content: center; gap: 12px; margin-top: 25px; }
+        .countdown-item { background: #fff; padding: 15px 5px; border-radius: 20px; min-width: 70px; border: 3px solid var(--accent-color); }
+        .countdown-item span { font-size: 1.8rem; font-weight: bold; color: var(--accent-color); }
 
-        .countdown-item {
-            background: #fff;
-            padding: 15px 5px;
-            border-radius: 20px;
-            min-width: 70px;
-            border: 3px solid var(--accent-color);
-        }
-
-        .countdown-item span {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-
-        /* RSVP 表單 */
+        /* RSVP Form */
         form { text-align: left; }
         .form-group { margin-bottom: 20px; }
         label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 1.1rem; }
         label.required::after { content: '*'; color: var(--primary-color); margin-left: 5px; }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #F0F0F0;
-            border-radius: 15px;
-            box-sizing: border-box;
-            font-size: 1rem;
-            background-color: #FAFAFA;
-        }
-
-        .radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-        .radio-label { display: flex; align-items: center; cursor: pointer; font-weight: normal; }
-        .radio-label input { width: auto; margin-right: 10px; accent-color: var(--primary-color); }
-
-        button.submit-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(45deg, var(--primary-color), #FFB7C5);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 6px 15px rgba(255, 158, 170, 0.4);
-            margin-top: 20px;
-        }
-
-        .map-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background-color: var(--accent-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-        }
-        
-        footer { padding: 30px; font-size: 0.9rem; color: #BBB; }
+        input, select, textarea { width: 100%; padding: 12px; border: 2px solid #F0F0F0; border-radius: 15px; box-sizing: border-box; font-size: 1rem; background-color: #FAFAFA; }
+        .submit-btn { width: 100%; padding: 16px; background: linear-gradient(45deg, var(--primary-color), #FFB7C5); color: white; border: none; border-radius: 50px; font-size: 1.3rem; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .map-btn { display: inline-block; margin-top: 20px; padding: 12px 30px; background-color: var(--accent-color); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- 音樂控制 -->
-    <div id="music-btn">
-        <span id="music-icon">🎵</span>
-    </div>
-    <audio id="bg-music" loop>
-        <!-- 【注意】請換成你的音樂檔案連結，例如：src="perfect_cut.mp3" -->
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- 首頁 -->
-    <div class="hero">
-        <div class="hero-content">
-            <h1 data-aos="zoom-in">Sheng Jie & Chia Yi</h1>
-            <p class="date" data-aos="fade-up" data-aos-delay="200">115 . 05 . 16</p>
-            <p style="font-size: 1.2rem; margin-top: 15px; font-weight: bold;">我們結婚啦！</p>
-        </div>
+    <!-- 開場遮罩 -->
+    <div id="entry-overlay">
+        <div class="heart-loader">❤️</div>
+        <p style="font-size: 1.2rem; color: var(--text-color); margin-bottom: 30px;">勝捷 & 佳嬑 婚禮邀請函</p>
+        <button class="open-btn" onclick="startEverything()">開啟幸福</button>
     </div>
 
-    <!-- 婚禮資訊 -->
-    <section>
-        <div class="container" data-aos="fade-up">
-            <h2 class="section-title">誠摯邀請</h2>
-            <div style="font-size: 1.15rem; line-height: 2;">
-                <p>親愛的親友們，</p>
-                <p>我們決定攜手走入人生的下一階段，</p>
-                <p>希望能與您分享這份滿溢的幸福！</p>
-                <div style="margin: 25px 0; border-top: 1px solid #EEE; padding-top: 20px;">
-                    <p>新郎：<span style="color: var(--primary-color); font-weight: bold;">楊勝捷</span></p>
-                    <p>新娘：<span style="color: var(--primary-color); font-weight: bold;">林佳嬑</span></p>
-                </div>
-            </div>
-            <div style="background: #FFF9F0; padding: 20px; border-radius: 20px; border: 2px solid var(--secondary-color);">
-                <p style="font-weight: bold; font-size: 1.2rem; margin: 5px 0;">📅 115年5月16日 (星期六)</p>
-                <p style="font-weight: bold; font-size: 1.2rem; margin: 5px 0;">⏰ 午宴 12:00 準時入席</p>
-            </div>
-            <h3 style="margin-top: 30px;">🏰 臻愛花園飯店 (風情雅典廳)</h3>
-            <p>台中市烏日區高鐵路三段168號</p>
-            <a href="https://maps.app.goo.gl/fy7K5zj9qgDx1G1GA" target="_blank" class="map-btn">📍 導航到婚禮現場</a>
+    <div id="main-content">
+        <!-- 音樂控制 -->
+        <div id="music-btn">
+            <span id="music-icon">🎵</span>
         </div>
-    </section>
+        <audio id="bg-music" loop>
+            <source src="perfect_cut.mp3" type="audio/mpeg">
+        </audio>
 
-    <!-- 倒數計時 -->
-    <section>
-         <div class="container" data-aos="zoom-in" style="background-color: #E0F7FA; border-color: var(--accent-color);">
-            <h2 class="section-title" style="color: #00838F; border-bottom-color: var(--accent-color);">婚禮倒數</h2>
-            <div class="countdown-container" id="countdown">
-                <div class="countdown-item"><span id="days">0</span><br><small>天</small></div>
-                <div class="countdown-item"><span id="hours">0</span><br><small>時</small></div>
-                <div class="countdown-item"><span id="mins">0</span><br><small>分</small></div>
-                <div class="countdown-item"><span id="secs">0</span><br><small>秒</small></div>
+        <!-- 首頁 -->
+        <div class="hero">
+            <div class="hero-content">
+                <h1 data-aos="zoom-in">Sheng Jie & Chia Yi</h1>
+                <p class="date" data-aos="fade-up" data-aos-delay="200">115 . 05 . 16</p>
+                <p style="font-size: 1.2rem; margin-top: 15px; font-weight: bold;">我們結婚啦！</p>
             </div>
         </div>
-    </section>
 
-    <!-- RSVP 表單 -->
-    <section id="rsvp-section">
-        <div class="container" data-aos="fade-up">
-            <h2 class="section-title">出席回函</h2>
-            <p style="margin-bottom: 30px;">為方便統計人數，請於 <span style="color: var(--primary-color); font-weight: bold;">115年5月1日</span> 前回覆喔！</p>
-            
-            <form id="rsvp-form">
-                <div class="form-group">
-                    <label class="required">您的姓名</label>
-                    <input type="text" name="name" required placeholder="請填寫姓名">
-                </div>
-
-                <div class="form-group">
-                    <label class="required">出席意願</label>
-                    <div class="radio-group">
-                        <label class="radio-label"><input type="radio" name="attendance" value="參加" checked> 期待參加</label>
-                        <label class="radio-label"><input type="radio" name="attendance" value="禮到人不到"> 祝福滿滿 (禮到人不到)</label>
+        <section>
+            <div class="container" data-aos="fade-up">
+                <h2 class="section-title">誠摯邀請</h2>
+                <div style="font-size: 1.15rem; line-height: 2;">
+                    <p>親愛的親友們，</p>
+                    <p>我們決定攜手走入人生的下一階段，</p>
+                    <p>希望能與您分享這份滿溢的幸福！</p>
+                    <div style="margin: 25px 0; border-top: 1px solid #EEE; padding-top: 20px;">
+                        <p>新郎：<span style="color: var(--primary-color); font-weight: bold;">楊勝捷</span></p>
+                        <p>新娘：<span style="color: var(--primary-color); font-weight: bold;">林佳嬑</span></p>
                     </div>
                 </div>
+                <div style="background: #FFF9F0; padding: 20px; border-radius: 20px; border: 2px solid var(--secondary-color);">
+                    <p style="font-weight: bold; font-size: 1.2rem; margin: 5px 0;">📅 115年5月16日 (星期六)</p>
+                    <p style="font-weight: bold; font-size: 1.2rem; margin: 5px 0;">⏰ 午宴 12:00 準時入席</p>
+                </div>
+                <h3 style="margin-top: 30px;">🏰 臻愛花園飯店 (風情雅典廳)</h3>
+                <p>台中市烏日區高鐵路三段168號</p>
+                <a href="https://maps.app.goo.gl/fy7K5zj9qgDx1G1GA" target="_blank" class="map-btn">📍 導航到婚禮現場</a>
+            </div>
+        </section>
 
-                <div style="display: flex; gap: 15px;">
-                    <div class="form-group" style="flex: 1;">
-                        <label class="required">總人數</label>
-                        <input type="number" name="total_guests" value="1" min="1" required>
+        <section>
+            <div class="container" data-aos="zoom-in" style="background-color: #E0F7FA; border-color: var(--accent-color);">
+                <h2 class="section-title" style="color: #00838F; border-bottom-color: var(--accent-color);">婚禮倒數</h2>
+                <div class="countdown-container" id="countdown">
+                    <div class="countdown-item"><span id="days">0</span><br><small>天</small></div>
+                    <div class="countdown-item"><span id="hours">0</span><br><small>時</small></div>
+                    <div class="countdown-item"><span id="mins">0</span><br><small>分</small></div>
+                    <div class="countdown-item"><span id="secs">0</span><br><small>秒</small></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="rsvp-section">
+            <div class="container" data-aos="fade-up">
+                <h2 class="section-title">出席回函</h2>
+                <p style="margin-bottom: 30px;">請於 <span style="color: var(--primary-color); font-weight: bold;">115年5月1日</span> 前回覆</p>
+                <form id="rsvp-form">
+                    <div class="form-group">
+                        <label class="required">您的姓名</label>
+                        <input type="text" name="name" required placeholder="請填寫姓名">
                     </div>
-                    <div class="form-group" style="flex: 1;">
-                        <label>茹素人數</label>
-                        <input type="number" name="vegetarian" value="0" min="0">
+                    <div class="form-group">
+                        <label class="required">出席意願</label>
+                        <select name="attendance" required>
+                            <option value="參加">期待參加</option>
+                            <option value="禮到人不到">祝福滿滿 (禮到人不到)</option>
+                        </select>
                     </div>
-                </div>
+                    <div style="display: flex; gap: 10px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label class="required">總人數</label>
+                            <input type="number" name="total_guests" value="1" min="1">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label>茹素人數</label>
+                            <input type="number" name="vegetarian" value="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>嬰兒座椅需求</label>
+                        <input type="number" name="baby_seats" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="required">您是新人的...</label>
+                        <select name="relationship" required>
+                            <option value="" disabled selected>請選擇關係</option>
+                            <option value="男方親友">男方親友</option>
+                            <option value="女方親友">女方親友</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>祝福小語</label>
+                        <textarea name="message" rows="3" placeholder="想對我們說的話..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submit-btn">💖 送出回函 💖</button>
+                </form>
+            </div>
+        </section>
 
-                <div class="form-group">
-                    <label>嬰兒座椅數量</label>
-                    <input type="number" name="baby_seats" value="0" min="0">
-                </div>
-
-                <div class="form-group">
-                    <label class="required">您是新人的...</label>
-                    <select name="relationship" required>
-                        <option value="" disabled selected>請選擇關係</option>
-                        <option value="男方親戚">男方親戚</option>
-                        <option value="男方朋友/同事">男方朋友/同事</option>
-                        <option value="女方親戚">女方親戚</option>
-                        <option value="女方朋友/同事">女方朋友/同事</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>想對我們說的話</label>
-                    <textarea name="message" rows="4" placeholder="留下您的祝福..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn" id="submit-btn">💖 送出回函 💖</button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
-        <p>© 2026 Sheng Jie & Chia Yi Wedding</p>
-    </footer>
+        <footer style="text-align: center; padding: 30px; color: #BBB;">
+            <p>© 2026 Sheng Jie & Chia Yi Wedding</p>
+        </footer>
+    </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -325,29 +256,39 @@
 
         const music = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-btn');
+        const overlay = document.getElementById('entry-overlay');
+        const mainContent = document.getElementById('main-content');
         let isPlaying = false;
-        let hasInteracted = false;
 
-        function startMusic() {
-            if (!hasInteracted) {
-                music.play().then(() => {
-                    musicBtn.classList.add('rotating');
-                    isPlaying = true;
-                    hasInteracted = true;
-                }).catch(e => console.log("等待點擊播放"));
-            }
+        // 當點擊開場按鈕時，啟動音樂、關閉遮罩
+        function startEverything() {
+            // 顯示內容
+            mainContent.style.display = 'block';
+            
+            // 啟動音樂
+            music.play().then(() => {
+                musicBtn.classList.add('rotating');
+                isPlaying = true;
+            }).catch(e => console.log("播放被瀏覽器暫時擋下，點擊按鈕重試"));
+
+            // 遮罩消失
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                // 觸發一次 AOS 確保動畫正確執行
+                AOS.refresh();
+            }, 1000);
         }
-        
-        document.body.addEventListener('click', startMusic, { once: true });
 
+        // 音樂手動開關
         musicBtn.onclick = (e) => {
             e.stopPropagation();
             if (isPlaying) { music.pause(); musicBtn.classList.remove('rotating'); }
             else { music.play(); musicBtn.classList.add('rotating'); }
             isPlaying = !isPlaying;
-            hasInteracted = true;
         };
 
+        // 倒數計時
         const weddingDate = new Date("May 16, 2026 12:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
@@ -358,8 +299,8 @@
             document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
         }, 1000);
 
-        // 【重要】請在此處填入你的 Apps Script 網址
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbym3ZPWi3nsJ8KajCLxemN7kM3SwGBBqBLtvN2dbHqvUl4zNZZqBJnsQNTFt8NlWlte/exec'; 
+        // 表單傳送
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbym3ZPWi3nsJ8KajCLxemN7kM3SwGBBqBLtvN2dbHqvUl4zNZZqBJnsQNTFt8NlWlte/exec'; // <--- 請填入你的 GAS 網址
         const form = document.getElementById('rsvp-form');
         const btn = document.getElementById('submit-btn');
 
@@ -367,23 +308,11 @@
             e.preventDefault();
             btn.disabled = true;
             btn.innerText = '傳送中...';
-
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
-
-            fetch(scriptURL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(data)
-            }).then(() => {
-                alert('🎉 回函成功！我們婚禮見！');
-                form.reset();
-                btn.disabled = false;
-                btn.innerText = '💖 送出回函 💖';
-            }).catch(error => {
-                alert('提交失敗，請檢查網路後再試');
-                btn.disabled = false;
-            });
+            fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) })
+            .then(() => { alert('🎉 回函成功！我們婚禮見！'); form.reset(); btn.disabled = false; btn.innerText = '💖 送出回函 💖'; })
+            .catch(() => { alert('發生錯誤'); btn.disabled = false; });
         };
     </script>
 </body>

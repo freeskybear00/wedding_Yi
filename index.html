@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -147,6 +148,7 @@
         .rotating { animation: rotate 5s linear infinite; }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+        /* 首頁設計 */
         .hero {
             height: 100vh;
             background: #e9edc9 url('image.jpg') center/cover no-repeat; 
@@ -161,7 +163,41 @@
 
         .hero-content { position: relative; z-index: 1; text-shadow: 2px 2px 5px rgba(0,0,0,0.6); }
         .hero h1 { font-family: 'Just Another Hand', cursive; font-size: 4.5rem; margin: 0; color: var(--secondary-color); }
-        .hero p.date { font-size: 1.5rem; font-weight: bold; background: var(--primary-color); padding: 8px 20px; border-radius: 50px; display: inline-block; margin-top: 10px; }
+        
+        /* 2026 日期區與火馬 */
+        .date-container {
+            position: relative;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .hero p.date { 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            background: var(--primary-color); 
+            padding: 8px 35px; 
+            border-radius: 50px; 
+            display: inline-block;
+            margin: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .fire-horse-hero {
+            position: absolute;
+            width: 80px;
+            height: auto;
+            top: -55px;
+            right: -40px;
+            z-index: 2;
+            transform: rotate(10deg);
+            filter: drop-shadow(0 0 10px rgba(255, 209, 102, 0.8));
+            animation: horseFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes horseFloat {
+            0%, 100% { transform: translate(0, 0) rotate(10deg); }
+            50% { transform: translate(-5px, -8px) rotate(12deg); }
+        }
 
         section { padding: 50px 20px; text-align: center; }
         .container { background: #fff; max-width: 550px; margin: 0 auto; padding: 40px 25px; border-radius: var(--border-radius); box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 4px dashed #FFD166; position: relative; }
@@ -182,7 +218,6 @@
             transition: all 0.3s;
         }
 
-        /* 禁用狀態的樣式 */
         input:disabled, select:disabled {
             background-color: #eeeeee;
             color: #999999;
@@ -193,6 +228,50 @@
         .submit-btn { width: 100%; padding: 16px; background: linear-gradient(45deg, var(--primary-color), #FFB7C5); color: white; border: none; border-radius: 50px; font-size: 1.3rem; font-weight: bold; cursor: pointer; margin-top: 20px; }
         .map-btn { display: inline-block; margin-top: 20px; padding: 12px 30px; background-color: var(--accent-color); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; }
         
+        /* 訂製日曆圖標 */
+        .calendar-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .calendar-custom {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: #fff;
+            border-radius: 6px;
+            border: 2px solid var(--text-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .calendar-custom::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 10px;
+            background: #FF4d4d;
+            border-bottom: 1px solid var(--text-color);
+        }
+        .calendar-custom::after {
+            content: '16';
+            position: absolute;
+            bottom: 1px; left: 0; width: 100%;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-color);
+            font-family: sans-serif;
+        }
+
+        .fire-horse-small {
+            width: 35px;
+            height: auto;
+            vertical-align: middle;
+            filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
+        }
+
         footer { text-align: center; padding: 30px; color: #BBB; font-size: 0.9rem; }
     </style>
 </head>
@@ -201,7 +280,7 @@
     <!-- 開場遮罩 -->
     <div id="entry-overlay">
         <div class="heart-loader">❤️</div>
-        <p style="font-size: 1.3rem; color: var(--text-color); margin-bottom: 30px; font-weight: bold; text-align:center;">勝捷 & 佳嬑<br>婚禮邀請函</p>
+        <p style="font-size: 1.3rem; color: var(--text-color); margin-bottom: 30px; font-weight: bold; text-align:center;">勝捷 & 佳嬑<br>2026 婚禮邀請函</p>
         <button class="open-btn" onclick="startEverything()">開啟幸福</button>
     </div>
 
@@ -226,7 +305,11 @@
         <div class="hero">
             <div class="hero-content">
                 <h1 data-aos="zoom-in">Sheng Jie & Chia Yi</h1>
-                <p class="date" data-aos="fade-up" data-aos-delay="200">115 . 05 . 16</p>
+                <div class="date-container" data-aos="fade-up" data-aos-delay="200">
+                    <!-- 火馬裝飾 -->
+                    <img src="fire-horse.png" alt="火馬" class="fire-horse-hero">
+                    <p class="date">2026 . 05 . 16</p>
+                </div>
                 <p style="font-size: 1.2rem; margin-top: 15px; font-weight: bold;">我們結婚啦！</p>
             </div>
         </div>
@@ -245,8 +328,12 @@
                     </div>
                 </div>
                 <div style="background: #FFF9F0; padding: 20px; border-radius: 20px; border: 2px solid var(--secondary-color);">
-                    <p style="font-weight: bold; font-size: 1.2rem; margin: 5px 0;">📅 115年5月16日 (星期六)</p>
-                    <p style="font-weight: bold; font-size: 1.2rem; margin: 5px 0;">⏰ 午宴 12:00 準時入席</p>
+                    <div class="calendar-wrapper">
+                        <img src="fire-horse.png" alt="小火馬" class="fire-horse-small">
+                        <span class="calendar-custom"></span> 
+                        <span style="font-weight: bold; font-size: 1.2rem;">2026年5月16日 (星期六)</span>
+                    </div>
+                    <p style="font-weight: bold; font-size: 1.2rem; margin: 10px 0 5px 0;">⏰ 午宴 12:00 準時入席</p>
                 </div>
                 <h3 style="margin-top: 30px;">🏰 臻愛花園飯店 (風情雅典廳)</h3>
                 <p>台中市烏日區高鐵路三段168號</p>
@@ -271,7 +358,7 @@
         <section id="rsvp-section">
             <div class="container" data-aos="fade-up">
                 <h2 class="section-title">出席回函</h2>
-                <p style="margin-bottom: 30px;">請於 <span style="color: var(--primary-color); font-weight: bold;">115年5月1日</span> 前回覆</p>
+                <p style="margin-bottom: 30px;">請於 <span style="color: var(--primary-color); font-weight: bold;">2026年5月1日</span> 前回覆</p>
                 <form id="rsvp-form">
                     <div class="form-group">
                         <label class="required">您的姓名</label>
@@ -331,7 +418,6 @@
         const customAlert = document.getElementById('custom-alert');
         let isPlaying = false;
 
-        // 表單連動邏輯
         const attendanceSelect = document.getElementById('attendance-select');
         const numInputs = {
             total: document.getElementById('input-total'),
@@ -341,12 +427,9 @@
 
         attendanceSelect.addEventListener('change', function() {
             const isNotAttending = this.value === '禮到人不到';
-            
-            // 設定禁用與重置數值
             numInputs.total.disabled = isNotAttending;
             numInputs.veg.disabled = isNotAttending;
             numInputs.baby.disabled = isNotAttending;
-
             if (isNotAttending) {
                 numInputs.total.value = 0;
                 numInputs.veg.value = 0;
@@ -408,7 +491,6 @@
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
-            // 處理禁用欄位在 FormData 中可能漏掉的問題，強制補齊 0
             if (data.attendance === '禮到人不到') {
                 data.total_guests = 0;
                 data.vegetarian = 0;
@@ -417,7 +499,6 @@
 
             fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) })
             .then(() => { 
-                // 根據出席意願決定提示語
                 let title = "🎉 提交成功 🎉";
                 let msg = data.attendance === '參加' 
                     ? '回函成功！謝謝您的祝福，我們婚禮見！' 
@@ -425,7 +506,6 @@
                 
                 showAlert(title, msg);
                 form.reset();
-                // 重置後手動觸發一次 change 以確保欄位狀態正確
                 attendanceSelect.dispatchEvent(new Event('change'));
                 btn.disabled = false; 
                 btn.innerText = '💖 送出回函 💖'; 
@@ -439,3 +519,5 @@
     </script>
 </body>
 </html>
+
+```

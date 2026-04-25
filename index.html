@@ -1,12 +1,11 @@
-```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>勝捷 & 佳嬑 婚禮邀請函</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Just+Another+Hand&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="[https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Just+Another+Hand&display=swap](https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Just+Another+Hand&display=swap)" rel="stylesheet">
+    <link href="[https://unpkg.com/aos@2.3.1/dist/aos.css](https://unpkg.com/aos@2.3.1/dist/aos.css)" rel="stylesheet">
     <style>
         :root {
             --primary-color: #FF9EAA;
@@ -102,9 +101,16 @@
         .alert-box h3 { color: var(--primary-color); margin: 0 0 15px 0; font-size: 1.6rem; }
         .alert-box p { margin: 0 0 25px 0; line-height: 1.7; font-size: 1.1rem; color: var(--text-color); }
         .alert-close-btn {
-            background: var(--primary-color); color: white; border: 3px solid #fff;
-            padding: 12px 45px; border-radius: 50px; font-weight: bold; cursor: pointer;
-            font-size: 1.1rem; box-shadow: 0 4px 10px rgba(255, 158, 170, 0.4);
+            background: var(--primary-color);
+            color: white;
+            border: 3px solid #fff;
+            padding: 12px 45px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(255, 158, 170, 0.4);
+            transition: all 0.2s;
         }
         
         .alert-close-btn:active { transform: scale(0.95); }
@@ -143,22 +149,45 @@
         .hero-content { position: relative; z-index: 1; text-shadow: 2px 2px 5px rgba(0,0,0,0.6); }
         .hero h1 { font-family: 'Just Another Hand', cursive; font-size: 4.5rem; margin: 0; color: var(--secondary-color); }
         
+        /* 封面 2026 日期區 */
         .date-container {
             position: relative;
             display: inline-block;
             margin-top: 10px;
         }
 
+        .fire-horse-year-hero {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 5;
+            letter-spacing: 2px;
+        }
+
         .hero p.date { 
-            font-size: 1.5rem; font-weight: bold; background: var(--primary-color); 
-            padding: 8px 35px; border-radius: 50px; display: inline-block; margin: 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); position: relative; z-index: 5;
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            background: var(--primary-color); 
+            padding: 8px 35px; 
+            border-radius: 50px; 
+            display: inline-block;
+            margin: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 4;
         }
 
         /* 封面馬移到最上層 */
         .fire-horse-hero {
-            position: absolute; width: 70px; height: auto; top: -20px; right: -35px;
-            z-index: 10; filter: drop-shadow(0 0 10px rgba(255, 209, 102, 0.8));
+            position: absolute;
+            width: 70px;
+            height: auto;
+            top: -5px;
+            right: -35px;
+            z-index: 10; 
+            filter: drop-shadow(0 0 10px rgba(255, 209, 102, 0.8));
             animation: horseFloat 3s ease-in-out infinite;
         }
 
@@ -186,11 +215,17 @@
             transition: all 0.3s;
         }
 
-        input:disabled, select:disabled { background-color: #eeeeee; color: #999999; cursor: not-allowed; border-color: #dddddd; }
+        input:disabled, select:disabled {
+            background-color: #eeeeee;
+            color: #999999;
+            cursor: not-allowed;
+            border-color: #dddddd;
+        }
 
         .submit-btn { width: 100%; padding: 16px; background: linear-gradient(45deg, var(--primary-color), #FFB7C5); color: white; border: none; border-radius: 50px; font-size: 1.3rem; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .map-btn { display: inline-block; margin-top: 20px; padding: 12px 30px; background-color: var(--accent-color); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; }
         
-        /* 資訊區卡片結構優化 */
+        /* 資訊卡片結構優化 */
         .calendar-wrapper {
             display: flex;
             flex-direction: column;
@@ -202,25 +237,43 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .calendar-custom {
-            display: inline-block; width: 32px; height: 32px; background: #fff;
-            border-radius: 6px; border: 2px solid var(--text-color); position: relative;
-            overflow: hidden; box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: #fff;
+            border-radius: 6px;
+            border: 2px solid var(--text-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
         .calendar-custom::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 10px;
-            background: #FF4d4d; border-bottom: 1px solid var(--text-color);
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 10px;
+            background: #FF4d4d;
+            border-bottom: 1px solid var(--text-color);
         }
         .calendar-custom::after {
-            content: '16'; position: absolute; bottom: 1px; left: 0; width: 100%;
-            text-align: center; font-size: 16px; font-weight: bold; color: var(--text-color);
+            content: '16';
+            position: absolute;
+            bottom: 1px; left: 0; width: 100%;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-color);
+            font-family: sans-serif;
         }
 
         .fire-horse-small {
-            width: 42px; height: auto; vertical-align: middle; margin-right: 5px;
+            width: 42px; /* 放大一點點 */
+            height: auto;
+            vertical-align: middle;
+            margin-right: 5px;
         }
 
         footer { text-align: center; padding: 30px; color: #BBB; font-size: 0.9rem; }
@@ -257,6 +310,7 @@
             <div class="hero-content">
                 <h1 data-aos="zoom-in">Sheng Jie & Chia Yi</h1>
                 <div class="date-container" data-aos="fade-up" data-aos-delay="200">
+                    <div class="fire-horse-year-hero">火馬年</div>
                     <p class="date">2026 . 05 . 16</p>
                     <img src="去背的IMG_9146.png" alt="火馬" class="fire-horse-hero">
                 </div>
@@ -277,14 +331,14 @@
                         <p>新娘：<span style="color: var(--primary-color); font-weight: bold;">林佳嬑</span></p>
                     </div>
                 </div>
-                <!-- 資訊卡片區：優化對齊結構 -->
+                <!-- 資訊卡片區 -->
                 <div style="background: #FFF9F0; padding: 25px 20px; border-radius: 20px; border: 2px solid var(--secondary-color);">
                     <div class="calendar-wrapper">
-                        <!-- 火馬年文字與圖標：置中於上方 -->
+                        <!-- 火馬年與圖標置中 -->
                         <div style="font-size: 1.15rem; color: #D84315; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; justify-content: center;">
                              <img src="去背的IMG_9146.png" alt="小火馬" class="fire-horse-small">火馬年
                         </div>
-                        <!-- 日期區塊 -->
+                        <!-- 日期與星期換行 -->
                         <div class="calendar-row">
                             <span class="calendar-custom"></span> 
                             <span style="font-weight: bold; font-size: 1.3rem; text-align: left; line-height: 1.4;">2026年5月16日<br>(星期六)</span>
@@ -294,7 +348,7 @@
                 </div>
                 <h3 style="margin-top: 30px;">🏰 臻愛花園飯店 (風情雅典廳)</h3>
                 <p>台中市烏日區高鐵路三段168號</p>
-                <a href="https://maps.app.goo.gl/fy7K5zj9qgDx1G1GA" target="_blank" class="map-btn" style="background-color: var(--accent-color); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; display: inline-block; margin-top: 20px; font-weight: bold; box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);">📍 導航到婚禮現場</a>
+                <a href="[https://maps.app.goo.gl/fy7K5zj9qgDx1G1GA](https://maps.app.goo.gl/fy7K5zj9qgDx1G1GA)" target="_blank" class="map-btn" style="background-color: var(--accent-color); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; display: inline-block; margin-top: 20px; font-weight: bold; box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);">📍 導航到婚禮現場</a>
             </div>
         </section>
 
@@ -364,9 +418,10 @@
         </footer>
     </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="[https://unpkg.com/aos@2.3.1/dist/aos.js](https://unpkg.com/aos@2.3.1/dist/aos.js)"></script>
     <script>
         AOS.init({ duration: 1000, once: true });
+
         const music = document.getElementById('bg-music');
         const musicBtn = document.getElementById('music-btn');
         const overlay = document.getElementById('entry-overlay');
@@ -429,7 +484,7 @@
             document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
         }, 1000);
 
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbym3ZPWi3nsJ8KajCLxemN7kM3SwGBBqBLtvN2dbHqvUl4zNZZqBJnsQNTFt8NlWlte/exec'; 
+        const scriptURL = '[https://script.google.com/macros/s/AKfycbym3ZPWi3nsJ8KajCLxemN7kM3SwGBBqBLtvN2dbHqvUl4zNZZqBJnsQNTFt8NlWlte/exec](https://script.google.com/macros/s/AKfycbym3ZPWi3nsJ8KajCLxemN7kM3SwGBBqBLtvN2dbHqvUl4zNZZqBJnsQNTFt8NlWlte/exec)'; 
         const form = document.getElementById('rsvp-form');
         const btn = document.getElementById('submit-btn');
 

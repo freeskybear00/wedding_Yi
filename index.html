@@ -164,7 +164,7 @@
         .hero-content { position: relative; z-index: 1; text-shadow: 2px 2px 5px rgba(0,0,0,0.6); }
         .hero h1 { font-family: 'Just Another Hand', cursive; font-size: 4.5rem; margin: 0; color: var(--secondary-color); }
         
-        /* 日期區與火馬 */
+        /* 2026 日期區與火馬佈局調整 */
         .date-container {
             position: relative;
             display: inline-block;
@@ -180,16 +180,18 @@
             display: inline-block;
             margin: 0;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 3; /* 高於馬 */
         }
 
+        /* 封面馬移到日期後面，避免遮擋名字 */
         .fire-horse-hero {
             position: absolute;
-            width: 80px;
+            width: 70px;
             height: auto;
-            top: -55px;
-            right: -40px;
-            z-index: 2;
-            transform: rotate(10deg);
+            top: -15px; /* 向下移，避開名字 */
+            right: -30px;
+            z-index: 2; /* 低於日期按鈕 */
             filter: drop-shadow(0 0 10px rgba(255, 209, 102, 0.8));
             animation: horseFloat 3s ease-in-out infinite;
         }
@@ -230,7 +232,12 @@
         
         /* 訂製日曆圖標 */
         .calendar-wrapper {
-            display: inline-flex;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .calendar-row {
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
@@ -266,10 +273,10 @@
         }
 
         .fire-horse-small {
-            width: 35px;
+            width: 30px;
             height: auto;
             vertical-align: middle;
-            filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
+            margin-right: 3px;
         }
 
         footer { text-align: center; padding: 30px; color: #BBB; font-size: 0.9rem; }
@@ -306,9 +313,9 @@
             <div class="hero-content">
                 <h1 data-aos="zoom-in">Sheng Jie & Chia Yi</h1>
                 <div class="date-container" data-aos="fade-up" data-aos-delay="200">
-                    <!-- 火馬裝飾 - 已更新檔名 -->
-                    <img src="去背的IMG_9146.png" alt="火馬" class="fire-horse-hero">
                     <p class="date">2026 . 05 . 16</p>
+                    <!-- 封面馬移至日期後方 -->
+                    <img src="去背的IMG_9146.png" alt="火馬" class="fire-horse-hero">
                 </div>
                 <p style="font-size: 1.2rem; margin-top: 15px; font-weight: bold;">我們結婚啦！</p>
             </div>
@@ -327,14 +334,18 @@
                         <p>新娘：<span style="color: var(--primary-color); font-weight: bold;">林佳嬑</span></p>
                     </div>
                 </div>
+                <!-- 資訊卡片區：火馬年標示與馬兒 -->
                 <div style="background: #FFF9F0; padding: 20px; border-radius: 20px; border: 2px solid var(--secondary-color);">
                     <div class="calendar-wrapper">
-                        <!-- 火馬裝飾 - 已更新檔名 -->
-                        <img src="去背的IMG_9146.png" alt="小火馬" class="fire-horse-small">
-                        <span class="calendar-custom"></span> 
-                        <span style="font-weight: bold; font-size: 1.2rem;">2026年5月16日 (星期六)</span>
+                        <div style="font-size: 1.1rem; color: #D84315; font-weight: bold; margin-bottom: 8px;">
+                            <img src="去背的IMG_9146.png" alt="小火馬" class="fire-horse-small"> 火馬年
+                        </div>
+                        <div class="calendar-row">
+                            <span class="calendar-custom"></span> 
+                            <span style="font-weight: bold; font-size: 1.25rem;">2026年5月16日 (星期六)</span>
+                        </div>
                     </div>
-                    <p style="font-weight: bold; font-size: 1.2rem; margin: 10px 0 5px 0;">⏰ 午宴 12:00 準時入席</p>
+                    <p style="font-weight: bold; font-size: 1.2rem; margin: 12px 0 5px 0;">⏰ 午宴 12:00 準時入席</p>
                 </div>
                 <h3 style="margin-top: 30px;">🏰 臻愛花園飯店 (風情雅典廳)</h3>
                 <p>台中市烏日區高鐵路三段168號</p>
@@ -445,7 +456,7 @@
             music.play().then(() => {
                 musicBtn.classList.add('rotating');
                 isPlaying = true;
-            }).catch(e => console.log("Waiting for interaction"));
+            }).catch(e => console.log("Music blocked, waiting for tap."));
             musicBtn.style.display = 'flex';
             overlay.style.opacity = '0';
             setTimeout(() => {
@@ -512,7 +523,7 @@
                 btn.innerText = '💖 送出回函 💖'; 
             })
             .catch(() => { 
-                showAlert('❌ 提交失敗', '哎呀，發生了一點錯誤，請再試一次'); 
+                showAlert('❌ 提交失敗', '發生錯誤，請稍後再試。'); 
                 btn.disabled = false; 
                 btn.innerText = '💖 送出回函 💖';
             });
